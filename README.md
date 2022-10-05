@@ -1,21 +1,18 @@
 # Parallel Dijkstra Algorithm
 
-В этом задании вам необходимо реализовать параллельную версию алгоритма Дейкстры с использованием Multi-Queue в качестве приоритетной очереди. 
-Решение, в котором поддерживается счетчик суммарного количества вершин в очереди и в процессе обработки (как рассказано на лекции) считается корректным.  Для обновления расстояния до вершины необходимо использовать операцию CAS. 
+In this task, you need to implement a parallel version of the 
+state-of-the-art Dijkstra algorithm for the SSSP graph problem.
+Use the Multi-Queue design for the priority queue implementation.
+Use `Compare-and-Set` to update the `Node`-s distance.
 
-Для тех, кто хочет получить больше пользы от выполнения задания, предлагается поддерживать счетчики количества пустых очередей (чтобы понимать, когда вершин для обработки нет и потенциально необходимо завершиться) и счетчик ждущих вершину для обработки потоков (последний поток, который входит в фазу ожидания, завершает алгоритм). Ожидание должно быть активным (проверка необходимого условия в цикле), никакие `wait`, `park` и прочие примитивы использовать не нужно.
+Note that you are eligible to change only the `src/Dijkstra.kt` file.
 
-Статьи для домашнего чтения, если хочется разобраться с теорией про Multi-Queue:
+Related papers:
 
-1. The Power of Choice in Priority Scheduling by Dan Alistarh, Justin Kopinsky, Jerry Li, Giorgi Nadiradze (https://arxiv.org/abs/1706.04178)
-2. Efficiency Guarantees for Parallel Incremental Algorithms under Relaxed Schedulers by Dan Alistarh, Nikita Koval, Giorgi Nadiradze (https://arxiv.org/abs/2003.09363)
+* [The Power of Choice in Priority Scheduling by Dan Alistarh, Justin Kopinsky, Jerry Li, Giorgi Nadiradze](https://arxiv.org/abs/1706.04178)
+* [Efficiency Guarantees for Parallel Incremental Algorithms under Relaxed Schedulers by Dan Alistarh, Nikita Koval, Giorgi Nadiradze](https://arxiv.org/abs/2003.09363)
 
+To test your solution, please run:
 
-Проект содержит следующие файлы:
-
-* `Graph.kt` содержит классы `Node` и `Edge`, которые вы будете использовать в алгоритме. Для обновления расстояния до вершины необходимо использовать `distanceMutable.compareAndSet(..)`.
-* `Dijkstra.kt` содержит шаблон для параллельной версии алгоритма, его вам и требуется дописать.
-
-
-## Ограничения
-Разрешается изменять только файл `Dijkstra.kt`.
+* `./gradlew build` on Linux or MacOS
+* `gradlew build` on Windows
