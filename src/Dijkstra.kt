@@ -26,10 +26,7 @@ fun shortestPathParallel(start: Node) {
     repeat(workers) {
         thread {
             while (true) {
-                val cur: Node? = q.poll()
-                if (cur == null) {
-                    if (q.activeNodes.value == 0) break else continue
-                }
+                val cur: Node = q.poll() ?: if (q.activeNodes.value == 0) break else continue
                 for (e in cur.outgoingEdges) {
                     while (true) {
                         val curDistance = cur.distance
@@ -57,7 +54,7 @@ class SuperPriorityQueue<E>(workers: Int, private val comparator: Comparator<in 
         private const val C = 3
     }
 
-    val queues = Array(workers * C) { (PriorityQueue(1, comparator) to reentrantLock()) }
+    private val queues = Array(workers * C) { (PriorityQueue(1, comparator) to reentrantLock()) }
     val activeNodes = atomic(0)
 
     fun add(element: E) {
